@@ -22,8 +22,9 @@ RUN apt-get install -y \
     libsqlite3-dev \
     libicu-dev \
     libpq-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     libpng-dev \
-    libjpeg-dev \
     gnupg
 
 # postgresql-client-9.6
@@ -35,11 +36,15 @@ RUN apt-get install -y postgresql-client-9.6
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # php extensions
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+
+RUN docker-php-ext-install gd
 RUN docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install pdo_sqlite
 RUN docker-php-ext-install intl
-RUN docker-php-ext-install gd
 
+# php.ini
 RUN echo "date.timezone=Europe/Warsaw" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "error_reporting=E_ALL & ~E_DEPRECATED & ~E_STRICT" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "display_errors=Off" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
