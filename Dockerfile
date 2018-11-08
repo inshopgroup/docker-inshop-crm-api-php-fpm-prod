@@ -27,11 +27,11 @@ RUN apt-get install -y \
     libpng-dev \
     gnupg
 
-# postgresql-client-9.6
+# postgresql-client-9.5
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get update
-RUN apt-get install -y postgresql-client-9.6
+RUN apt-get install -y postgresql-client-9.5
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
