@@ -51,6 +51,9 @@ RUN echo "display_errors=Off" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "max_execution_time=300" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "memory_limit = 2048M" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 
+RUN echo "upload_max_filesize=100M" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
+RUN echo "post_max_size=100M" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
+
 RUN echo "opcache.max_accelerated_files = 20000" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "realpath_cache_size = 4096K" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "realpath_cache_ttl = 600" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
