@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.3-fpm
 
 WORKDIR /var/www
 
@@ -15,11 +15,6 @@ RUN apt-get install -y \
     zip \
     unzip \
     iputils-ping \
-#    libxrender1 \
-#    libxext6 \
-#    libfontconfig \
-#    libxml2-dev \
-    libsqlite3-dev \
     libicu-dev \
     libpq-dev \
     libfreetype6-dev \
@@ -27,11 +22,11 @@ RUN apt-get install -y \
     libpng-dev \
     gnupg
 
-# postgresql-client-9.5
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get update
-RUN apt-get install -y postgresql-client-9.5
+# wkhtmltopdf
+RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+RUN tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+RUN cp wkhtmltox/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf
+RUN rm wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -40,8 +35,6 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install pdo_pgsql
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install pdo_sqlite
 RUN docker-php-ext-install intl
 
 # php.ini
