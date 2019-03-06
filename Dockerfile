@@ -36,6 +36,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install pdo_pgsql
 RUN docker-php-ext-install intl
+RUN docker-php-ext-enable opcache
 
 # php.ini
 RUN echo "date.timezone=Europe/Warsaw" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
@@ -48,6 +49,8 @@ RUN echo "upload_max_filesize=100M" >> /usr/local/etc/php/conf.d/docker-php-cust
 RUN echo "post_max_size=100M" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 
 RUN echo "opcache.max_accelerated_files = 20000" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
+RUN echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
+RUN echo "opcache.validate_timestamps=0" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "realpath_cache_size = 4096K" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "realpath_cache_ttl = 600" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 
