@@ -38,6 +38,10 @@ RUN docker-php-ext-install pdo_pgsql
 RUN docker-php-ext-install intl
 RUN docker-php-ext-enable opcache
 
+# redis
+RUN pecl install redis
+RUN docker-php-ext-enable redis
+
 # php.ini
 RUN echo "date.timezone=Europe/Warsaw" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "error_reporting=E_ALL & ~E_DEPRECATED & ~E_STRICT" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
