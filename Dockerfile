@@ -17,9 +17,6 @@ RUN apt-get install -y \
     iputils-ping \
     libicu-dev \
     libpq-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
     gnupg
 
 # wkhtmltopdf
@@ -28,12 +25,29 @@ RUN tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
 RUN cp wkhtmltox/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf
 RUN rm wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
 
+# composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# php extensions
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+# GD
+RUN apt-get install -y \
+    libwebp-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev libxpm-dev \
+    libfreetype6-dev
+
+RUN docker-php-ext-configure gd \
+    --with-gd \
+    --with-webp-dir \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --with-zlib-dir \
+    --with-xpm-dir \
+    --with-freetype-dir \
+    --enable-gd-native-ttf
 
 RUN docker-php-ext-install gd
+
+# other php extensions
 RUN docker-php-ext-install pdo_pgsql
 RUN docker-php-ext-install intl
 RUN docker-php-ext-enable opcache
@@ -52,6 +66,7 @@ RUN echo "memory_limit = 2048M" >> /usr/local/etc/php/conf.d/docker-php-custom.i
 RUN echo "upload_max_filesize=100M" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "post_max_size=100M" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 
+# opcache configuration
 RUN echo "opcache.max_accelerated_files = 20000" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "opcache.validate_timestamps=0" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
