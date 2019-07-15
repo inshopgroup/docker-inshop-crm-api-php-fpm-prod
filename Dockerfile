@@ -14,7 +14,6 @@ RUN apt-get install -y \
     git \
     zip \
     unzip \
-    iputils-ping \
     libicu-dev \
     libpq-dev \
     gnupg
@@ -30,20 +29,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # GD
 RUN apt-get install -y \
-    libwebp-dev \
     libjpeg62-turbo-dev \
-    libpng-dev libxpm-dev \
+    libpng-dev \
     libfreetype6-dev
 
 RUN docker-php-ext-configure gd \
-    --with-gd \
-    --with-webp-dir \
-    --with-jpeg-dir \
-    --with-png-dir \
-    --with-zlib-dir \
-    --with-xpm-dir \
-    --with-freetype-dir \
-    --enable-gd-native-ttf
+    --with-freetype-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/
 
 RUN docker-php-ext-install gd
 
@@ -66,7 +58,6 @@ RUN echo "memory_limit = 2048M" >> /usr/local/etc/php/conf.d/docker-php-custom.i
 RUN echo "upload_max_filesize=100M" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "post_max_size=100M" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 
-# opcache configuration
 RUN echo "opcache.max_accelerated_files = 20000" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "opcache.validate_timestamps=0" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
