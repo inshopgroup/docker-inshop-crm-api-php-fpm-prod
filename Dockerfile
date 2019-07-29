@@ -19,10 +19,18 @@ RUN apt-get install -y \
     gnupg
 
 # wkhtmltopdf
-RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-RUN tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-RUN cp wkhtmltox/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf
-RUN rm wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+RUN apt-get install -y \
+    libxrender1 \
+    libfontconfig1 \
+    libx11-dev \
+    libjpeg62 \
+    libxtst6 \
+    fontconfig \
+    xfonts-75dpi \
+    xfonts-base
+RUN wget "https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb"
+RUN dpkg -i wkhtmltox_0.12.5-1.stretch_amd64.deb
+RUN apt-get -f install
 
 # composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
