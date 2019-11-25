@@ -6,8 +6,6 @@ RUN usermod -u 1000 www-data
 
 RUN apt-get update
 RUN apt-get install -y \
-    cron \
-    supervisor \
     nano \
     curl \
     wget \
