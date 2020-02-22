@@ -47,6 +47,7 @@ RUN docker-php-ext-install gd
 
 # other php extensions
 RUN docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install intl
 RUN docker-php-ext-enable opcache
 
