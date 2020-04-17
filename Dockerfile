@@ -56,7 +56,7 @@ RUN pecl install redis
 RUN docker-php-ext-enable redis
 
 # php.ini
-RUN echo "date.timezone=Europe/Warsaw" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
+RUN echo "date.timezone=UTC" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "error_reporting=E_ALL & ~E_DEPRECATED & ~E_STRICT" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "display_errors=Off" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
 RUN echo "max_execution_time=300" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
