@@ -26,7 +26,7 @@ RUN apt-get install -y \
     fontconfig \
     xfonts-75dpi \
     xfonts-base
-RUN wget "https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb"
+RUN wget "https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb"
 RUN dpkg -i wkhtmltox_0.12.5-1.stretch_amd64.deb
 RUN apt-get -f install
 
