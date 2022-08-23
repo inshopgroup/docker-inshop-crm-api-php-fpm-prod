@@ -4,8 +4,8 @@ WORKDIR /var/www
 
 RUN usermod -u 1000 www-data
 
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt update
+RUN apt install -y \
     nano \
     curl \
     wget \
@@ -17,24 +17,24 @@ RUN apt-get install -y \
     gnupg
 
 # wkhtmltopdf
-RUN apt-get install -y \
-    libxrender1 \
-    libfontconfig1 \
-    libx11-dev \
-    libjpeg62 \
-    libxtst6 \
-    fontconfig \
-    xfonts-75dpi \
-    xfonts-base
-RUN wget "https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb"
-RUN dpkg -i wkhtmltox_0.12.5-1.stretch_amd64.deb
-RUN apt-get -f install
+#RUN apt install -y \
+#    libxrender1 \
+#    libfontconfig1 \
+#    libx11-dev \
+#    libjpeg62 \
+#    libxtst6 \
+#    fontconfig \
+#    xfonts-75dpi \
+#    xfonts-base
+#RUN wget "https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb"
+#RUN dpkg -i wkhtmltox_0.12.5-1.stretch_amd64.deb
+#RUN apt-get -f install
 
 # composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # GD
-RUN apt-get install -y \
+RUN apt install -y \
     libjpeg62-turbo-dev \
     libpng-dev \
     libfreetype6-dev
@@ -47,13 +47,13 @@ RUN docker-php-ext-install gd
 
 # other php extensions
 RUN docker-php-ext-install pdo_pgsql
-RUN docker-php-ext-install pdo_mysql
+#RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install intl
 RUN docker-php-ext-enable opcache
 
 # redis
-RUN pecl install redis
-RUN docker-php-ext-enable redis
+#RUN pecl install redis
+#RUN docker-php-ext-enable redis
 
 # php.ini
 RUN echo "date.timezone=UTC" >> /usr/local/etc/php/conf.d/docker-php-custom.ini
